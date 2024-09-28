@@ -15,3 +15,7 @@ Mais j'ai tout de même l'intention de le mettre à jour bien plus tard, pour qu
 
 ## License
 Tout le contenu de ce dépôt est la propriété exclusive de l'auteur. Il est strictement interdit de reproduire, distribuer ou modifier ce contenu, en tout ou en partie, sans l'autorisation expresse et écrite de l'auteur. Toute violation de ces termes sera poursuivie conformément aux lois en vigueur.
+
+## Read-only
+Le projet à été mit en read-only (archivé), car SPEngine a été abandonné pour XYEngine, Minesweeper Basic n'a alors aucune chance de recevoir une mise à jour.
+Plus d'infos sur le changement du moteur [ici](https://sinafproduction.xyz/blogs/104547462).
