@@ -1,11 +1,13 @@
 ﻿using MinesweeperBasic.Scenes;
 using XYEngine;
+using XYEngine.GO;
 using XYEngine.Resources;
 using XYEngine.UI;
 using XYEngine.UI.Widgets;
 
 XY.CreateGame()
   .SetIcon("assets/icon.png")
+  .AddModule<GOModule>()
   .AddModule<UIModule>()
   .SetStartingScene<Splash>()
   .SetWindowOptions(new WindowOptions("Minesweeper BASIC", 720, 460)

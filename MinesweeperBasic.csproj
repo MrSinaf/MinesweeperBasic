@@ -17,6 +17,7 @@
         
         <ProjectReference Include="..\XYEngine\XYEngine.Core\XYEngine.Core.csproj" />
         <ProjectReference Include="..\XYEngine\XYEngine.UI\XYEngine.UI.csproj" />
+        <ProjectReference Include="..\XYEngine\XYEngine.GO\XYEngine.GO.csproj" />
     </ItemGroup>
     <!-- XYEngine end integration   -->
 
