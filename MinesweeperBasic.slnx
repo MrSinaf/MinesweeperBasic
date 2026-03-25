@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../XYEngine/XYEngine.Core/XYEngine.Core.csproj" />
+  <Project Path="../XYEngine/XYEngine.GO/XYEngine.GO.csproj" />
+  <Project Path="../XYEngine/XYEngine.Native/XYEngine.Native.csproj" />
+  <Project Path="../XYEngine/XYEngine.UI/XYEngine.UI.csproj" />
+  <Project Path="MinesweeperBasic.csproj" />
+</Solution>

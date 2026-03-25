@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>Exe</OutputType>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!-- XYEngine start integration -->
+    <ItemGroup>
+        <None Update="assets\**\*" CopyToOutputDirectory="Always"/>
+        
+        <ProjectReference Include="..\XYEngine\XYEngine.Core\XYEngine.Core.csproj" />
+        <ProjectReference Include="..\XYEngine\XYEngine.UI\XYEngine.UI.csproj" />
+    </ItemGroup>
+    <!-- XYEngine end integration   -->
+
+</Project>
