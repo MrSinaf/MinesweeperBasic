@@ -1,32 +1,28 @@
 ﻿using XYEngine;
 using XYEngine.GO;
-using XYEngine.Resources;
-using XYEngine.Utils;
+using XYEngine.UI;
 
 namespace MinesweeperBasic.Scenes;
 
-public enum TileType { Closed, Opened, Flagged }
+public enum TileType { Closed, Opened, Questionned, Flagged }
 
 public class Game(Vector2Int size) : Scene
 {
-	private const int TILE_SIZE = 32;
-	private readonly RectInt[] tilesN =
-	[
-		new (48, 0, 16, 16), new (0, 16, 16, 16), new (16, 16, 16, 16), new (32, 16, 16, 16),
-		new (48, 16, 16, 16), new (0, 32, 16, 16), new (16, 32, 16, 16), new (32, 32, 16, 16),
-		new (48, 32, 16, 16)
-	];
+	public const int TILE_SIZE = 32;
 	
 	private readonly (TileType type, bool isBomb)[,] tiles = new (TileType, bool)[size.x, size.y];
 	
 	private World world = null!;
-	private XYObject map = null!;
-	private Texture2D tilesTexture = null!;
+	private Canvas canvas = null!;
+	
+	private Map map = null!;
 	private bool moveCamera;
 	
 	public override void Init()
 	{
 		world = AddPlugin<World>();
+		canvas = AddPlugin<Canvas>();
+		
 		XY.game.window.mouseButtonPressed += OnMouseButtonPressed;
 		XY.game.window.mouseButtonReleased += OnMouseButtonReleased;
 		XY.game.window.cursorMoved += OnCursorMoved;
@@ -35,8 +31,6 @@ public class Game(Vector2Int size) : Scene
 	
 	public override void Start()
 	{
-		tilesTexture = Vault.GetAsset<Texture2D>("tiles")!;
-		
 		var bombs = new Vector2[10];
 		for (var i = 0; i < 10; i++)
 		{
@@ -48,46 +42,54 @@ public class Game(Vector2Int size) : Scene
 			bombs[i] = position;
 		}
 		
-		var meshes = new (Rect vertices, Region uvs)[size.x * size.y];
 		for (var x = 0; x < size.x; x++)
 		for (var y = 0; y < size.y; y++)
-		{
-			var position = new Vector2(x, y);
-			tiles[x, y] = (TileType.Closed, bombs.Contains(position));
-			meshes[x + y * size.x] = (
-				new Rect(position * TILE_SIZE, new Vector2(TILE_SIZE)),
-				tilesTexture.GetUVRegion(new RectInt(0, 0, 16, 16))
-			);
-		}
+			tiles[x, y] = (TileType.Closed, bombs.Contains(new Vector2(x, y)));
 		
 		world.camera.position = size * TILE_SIZE * 0.5F;
-		world.AddObject(
-			map = new XYObject
-			{
-				material = new MaterialObject().SetTexture(tilesTexture),
-				mesh = MeshFactory.CreateQuads(meshes).Apply()
-			}
-		);
+		world.AddObject(map = new Map(size));
 	}
 	
 	private void OnMouseButtonPressed(MouseButton button)
 	{
-		if (button == MouseButton.Left)
-		{
-			OnTile(
-				(world.camera.ScreenToWorldPosition(XY.game.window.cursorPosition) / TILE_SIZE)
-				.ToVector2Int(RoundingMode.Floor)
-			);
-			
-			map.mesh.Apply();
-		}
-		else if (button == MouseButton.Right)
+		if (button == MouseButton.Middle)
 			moveCamera = true;
+		else
+		{
+			var position = (world.camera.ScreenToWorldPosition(XY.game.window.cursorPosition)
+							/ TILE_SIZE).ToVector2Int(RoundingMode.Floor);
+			
+			if (!IsValidPosition(position))
+				return;
+			
+			if (button == MouseButton.Left)
+				OnTile(position);
+			else if (button == MouseButton.Right)
+			{
+				ref var tile = ref tiles[position.x, position.y];
+				switch (tile.type)
+				{
+					case TileType.Opened:
+						return;
+					case TileType.Closed:
+						map.UpdateTileUV(position, tile.type = TileType.Questionned);
+						break;
+					case TileType.Questionned:
+						map.UpdateTileUV(position, tile.type = TileType.Flagged);
+						break;
+					case TileType.Flagged:
+						map.UpdateTileUV(position, tile.type = TileType.Closed);
+						break;
+				}
+			}
+			
+			map.ApplyUpdate();
+		}
 	}
 	
 	private void OnMouseButtonReleased(MouseButton button)
 	{
-		if (button == MouseButton.Right)
+		if (button == MouseButton.Middle)
 			moveCamera = false;
 	}
 	
@@ -103,23 +105,16 @@ public class Game(Vector2Int size) : Scene
 	{
 		if (key == Key.LeftCtrl)
 			world.camera.position = size * TILE_SIZE * 0.5F;
-		
 	}
 	
 	private void OnTile(Vector2Int position)
 	{
-		if (!IsValidPosition(position))
-			return;
-		
-		var tile = tiles[position.x, position.y];
+		ref var tile = ref tiles[position.x, position.y];
 		if (tile.type == TileType.Opened)
 			return;
 		
 		if (tile.isBomb)
-		{
-			tile.type = TileType.Opened;
-			UpdateTileUV(position, tilesTexture.GetUVRegion(new RectInt(0, 48, 16, 16)));
-		}
+			map.UpdateTileUVAsBomb(position);
 		else
 			RevealTile(position);
 		
@@ -128,11 +123,11 @@ public class Game(Vector2Int size) : Scene
 			if (!IsValidPosition(position))
 				return;
 			
-			var tile = tiles[position.x, position.y];
+			ref var tile = ref tiles[position.x, position.y];
 			if (tile.type == TileType.Opened)
 				return;
 			
-			tiles[position.x, position.y].type = TileType.Opened;
+			tile.type = TileType.Opened;
 			
 			var bombCount = 0;
 			for (var dx = -1; dx <= 1; dx++)
@@ -145,7 +140,7 @@ public class Game(Vector2Int size) : Scene
 					bombCount++;
 			}
 			
-			UpdateTileUV(position, tilesTexture.GetUVRegion(tilesN[bombCount]));
+			map.UpdateTileUV(position, bombCount);
 			if (bombCount == 0)
 			{
 				RevealTile(position + new Vector2Int(1, 0));
@@ -154,15 +149,6 @@ public class Game(Vector2Int size) : Scene
 				RevealTile(position + new Vector2Int(0, -1));
 			}
 		}
-	}
-	
-	private void UpdateTileUV(Vector2Int position, Region uv)
-	{
-		var i = (position.x + position.y * size.x) * 4;
-		map.mesh.vertices[i].uv = uv.position00;
-		map.mesh.vertices[i + 1].uv = new Vector2(uv.position11.x, uv.position00.y);
-		map.mesh.vertices[i + 2].uv = uv.position11;
-		map.mesh.vertices[i + 3].uv = new Vector2(uv.position00.x, uv.position11.y);
 	}
 	
 	private bool IsValidPosition(Vector2Int position)
