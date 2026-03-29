@@ -114,7 +114,10 @@ public class Game(Vector2Int size) : Scene
 			return;
 		
 		if (tile.isBomb)
+		{
+			tile.type = TileType.Opened;
 			map.UpdateTileUVAsBomb(position);
+		}
 		else
 			RevealTile(position);
 		
