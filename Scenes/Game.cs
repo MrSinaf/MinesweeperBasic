@@ -38,6 +38,14 @@ public class Game(Vector2Int size, int nBomb) : Scene
 		R.game.window.keyPressed += OnKeyPressed;
 	}
 	
+	public override void Unload()
+	{
+		R.game.window.mouseButtonPressed -= OnMouseButtonPressed;
+		R.game.window.mouseButtonReleased -= OnMouseButtonReleased;
+		R.game.window.cursorMoved -= OnCursorMoved;
+		R.game.window.keyPressed -= OnKeyPressed;
+	}
+	
 	public override void Start()
 	{
 		canvas.root.AddChild(ui = new GameUI());
