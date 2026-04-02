@@ -12,6 +12,10 @@
     </PropertyGroup>
 
     <!-- Ratelite start integration -->
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <OutputType>WinExe</OutputType>
+    </PropertyGroup>
+    
     <ItemGroup>
         <None Update="assets\**\*" CopyToOutputDirectory="Always"/>
     </ItemGroup>
