@@ -18,6 +18,7 @@ public class Menu : Scene
 		canvas.root.AddChild(
 			new Image(Vault.GetAsset<Texture2D>("ui")!)
 			{
+				name = "title",
 				pivot = new Vector2(0.5F, 1),
 				anchors = new Vector2(0.5F, 0.75F),
 				scale = new Vector2(3F),

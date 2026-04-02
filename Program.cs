@@ -6,7 +6,7 @@ using Ratelite.UI;
 using Ratelite.UI.Widgets;
 
 R.CreateGame()
-  // .SetIcon("assets/icon.png")
+  .SetIcon("assets/icon.png")
   .AddModule<GOModule>()
   .AddModule<UIModule>()
   .SetStartingScene<Splash>()
@@ -35,18 +35,22 @@ void ButtonPrefab(Button e)
 	var texture = Vault.GetAsset<Texture2D>("ui")!;
 	e.material = new MaterialUI().SetTexture(texture)
 								 .SetNinePatch(new Region(new Vector2(3, 2), new Vector2(3, 4)), 3);
-	e.uv = texture.GetUVRegion(new RectInt(0, 32, 16, 16));
+	e.uv =  texture.GetUVRegion(new RectInt(0, 32, 16, 16));
 	e.size = new Vector2(200, 35);
 	
 	e.label.pivot = e.label.anchors = new Vector2(0.5F);
 	e.label.position = new Vector2(0, 2);
 	e.label.tint = Color.white;
 	
-	UIEvent.Register(e, UIEvent.Type.CursorEnter, OnCursorEnter);
-	UIEvent.Register(e, UIEvent.Type.CursorExit, OnCursorExit);
+	e.cursorEnter += OnCursorEnter;
+	e.cursorExit += OnCursorExit;
+	e.onPressed += OnPressed;
+	e.onReleased += OnReleased;
 	
 	void OnCursorEnter(UIElement e) => ((Button)e).label.tint = Color.green;
 	void OnCursorExit(UIElement e) => ((Button)e).label.tint = Color.white;
+	void OnPressed(UIElement e) => e.uv = texture.GetUVRegion(new RectInt(16, 32, 16, 16));
+	void OnReleased(UIElement e) => e.uv = texture.GetUVRegion(new RectInt(0, 32, 16, 16));
 }
 
 void PanelPrefab(Panel e)

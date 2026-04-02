@@ -86,6 +86,9 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	
 	private void OnMouseButtonPressed(MouseButton button)
 	{
+		if (canvas.hasElementHovered)
+			return;
+		
 		if (button == MouseButton.Middle)
 			moveCamera = true;
 		else

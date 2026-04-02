@@ -16,6 +16,7 @@ public sealed class GameUI : UIElement
 	{
 		anchorMin = Vector2.zero;
 		anchorMax = Vector2.one;
+		isInteractif = false;
 		
 		var uiTextures = Vault.GetAsset<Texture2D>("ui")!;
 		var panel = new Panel
