@@ -152,8 +152,18 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	
 	private void OnKeyPressed(Key key, int _)
 	{
-		if (key == Key.LeftCtrl)
-			world.camera.position = size * TILE_SIZE * 0.5F;
+		switch (key)
+		{
+			case Key.LeftCtrl:
+				world.camera.position = size * TILE_SIZE * 0.5F;
+				break;
+			case Key.Escape:
+				Stage.Load(new Menu()).Wait();
+				break;
+			case Key.R:
+				Stage.Load(new Game(size, nBomb)).Wait();
+				break;
+		}
 	}
 	
 	private void OnTile(Vector2Int position)

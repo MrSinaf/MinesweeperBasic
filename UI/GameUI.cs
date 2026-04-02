@@ -10,7 +10,6 @@ public sealed class GameUI : UIElement
 {
 	private readonly Label timer;
 	private readonly Label bombsLeft;
-	private readonly Button quitButton;
 	
 	public GameUI()
 	{
@@ -58,12 +57,6 @@ public sealed class GameUI : UIElement
 				anchors = new Vector2(1, 0.5F)
 			}
 		);
-		AddChild(
-			quitButton = new Button("Quitter", () => Stage.Load(new Menu()).Wait())
-			{
-				size = new Vector2(100, 35),
-			}
-		);
 	}
 	
 	public void ShowWinPanel()
@@ -91,9 +84,13 @@ public sealed class GameUI : UIElement
 				anchors = new Vector2(0.5F),
 			}
 		);
-		quitButton.mesh = null;
-		quitButton.pivot = quitButton.anchors = new Vector2(0.5F, 0);
-		panel.AddChild(quitButton);
+		panel.AddChild(new Button("Quitter", () => Stage.Load(new Menu()).Wait())
+		{
+			mesh = null,
+			size = new Vector2(100, 35),
+			pivot = new Vector2(0.5F, 0),
+			anchors = new Vector2(0.5F, 0)
+		});
 		AddChild(panel);
 	}
 	
@@ -122,9 +119,13 @@ public sealed class GameUI : UIElement
 				anchors = new Vector2(0.5F),
 			}
 		);
-		quitButton.mesh = null;
-		quitButton.pivot = quitButton.anchors = new Vector2(0.5F, 0);
-		panel.AddChild(quitButton);
+		panel.AddChild(new Button("Quitter", () => Stage.Load(new Menu()).Wait())
+		{
+			mesh = null,
+			size = new Vector2(100, 35),
+			pivot = new Vector2(0.5F, 0),
+			anchors = new Vector2(0.5F, 0)
+		});
 		AddChild(panel);
 	}
 	
