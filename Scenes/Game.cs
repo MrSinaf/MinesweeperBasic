@@ -80,7 +80,22 @@ public class Game(Vector2Int size, int nBomb) : Scene
 		foreach (var bomb in bombs)
 			map.UpdateTileUVAsBomb(bomb);
 		
-		ui.ShowLoosePanel(bombs.Length - bombFlagged);
+		Task.Run(async () =>
+			{
+				var position = world.camera.position;
+				for (var i = 0; i < 25; i++)
+				{
+					world.camera.position = position + new Vector2Int(
+						Random.Shared.Next(-10, 10),
+						Random.Shared.Next(-10, 10)
+					);
+					await Task.Delay(15);
+				}
+				world.camera.position = position;
+				ui.ShowLoosePanel(bombs.Length - bombFlagged);
+			}
+		);
+		
 		finished = true;
 	}
 	
@@ -223,6 +238,7 @@ public class Game(Vector2Int size, int nBomb) : Scene
 				}
 			}
 		}
+		
 		map.ApplyUpdate();
 	}
 	
