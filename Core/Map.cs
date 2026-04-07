@@ -31,7 +31,7 @@ public class Map : RObject
 	
 	public void ApplyUpdate()
 	{
-		mesh.ApplyVertex();
+		mesh!.ApplyVertex();
 	}
 	
 	public void UpdateTileUVAsBomb(Vector2Int position)
@@ -52,10 +52,10 @@ public class Map : RObject
 		);
 		
 		var i = (position.x + position.y * size.x) * 4;
-		mesh.ApplyVertex(i, 1);
-		mesh.ApplyVertex(i + 1, 1);
-		mesh.ApplyVertex(i + 2, 1);
-		mesh.ApplyVertex(i + 3, 1);
+		mesh!.ApplyVertex(i, 1);
+		mesh!.ApplyVertex(i + 1, 1);
+		mesh!.ApplyVertex(i + 2, 1);
+		mesh!.ApplyVertex(i + 3, 1);
 	}
 	
 	public void UpdateTileUV(Vector2Int position, int n)
