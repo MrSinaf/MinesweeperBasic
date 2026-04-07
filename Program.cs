@@ -10,7 +10,7 @@ R.CreateGame()
   .AddModule<GOModule>()
   .AddModule<UIModule>()
   .SetStartingScene<Splash>()
-  .SetWindowOptions(new WindowOptions("Minesweeper BASIC", 720, 460)
+  .SetWindowOptions(new WindowOptions("Minesweeper BASIC", 960, 550)
   {
 	  resizable = false
   })

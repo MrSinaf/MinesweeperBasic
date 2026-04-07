@@ -22,7 +22,7 @@ public sealed class GameUI : UIElement
 		{
 			material = new MaterialUI().SetTexture(uiTextures)
 									   .SetNinePatch(new Region(5), 3),
-			uv = uiTextures.GetUVRegion(new RectInt(32, 32, 16, 16)),
+			uv = uiTextures.GetUVRegion(new RectInt(80, 32, 16, 16)),
 			cornerRadius = Region.zero,
 			tint = Color.white,
 			pivot = new Vector2(0.5F, 1),
@@ -34,6 +34,7 @@ public sealed class GameUI : UIElement
 		panel.AddChild(
 			timer = new Label("00:00")
 			{
+				name = "timer",
 				pivot = new Vector2(0, 0.5F),
 				anchors = new Vector2(0, 0.5F)
 			}
@@ -41,6 +42,7 @@ public sealed class GameUI : UIElement
 		panel.AddChild(
 			bombsLeft = new Label("0")
 			{
+				name = "bombsLeft",
 				position = new Vector2(-18, 0),
 				pivot = new Vector2(1, 0.5F),
 				anchors = new Vector2(1, 0.5F)
@@ -49,8 +51,8 @@ public sealed class GameUI : UIElement
 		panel.AddChild(
 			new Image(uiTextures)
 			{
-				// Texture de bombe
-				uv = uiTextures.GetUVRegion(new RectInt(132, 35, 8, 10)),
+				name = "bomb",
+				uv = uiTextures.GetUVRegion(new RectInt(212, 35, 8, 10)),
 				size = new Vector2(8, 10),
 				scale = new Vector2(1.5F),
 				pivot = new Vector2(1, 0.5F),
