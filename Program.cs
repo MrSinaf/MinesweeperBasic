@@ -49,8 +49,22 @@ void ButtonPrefab(Button e)
 	
 	void OnCursorEnter(UIElement e) => ((Button)e).label.tint = Color.green;
 	void OnCursorExit(UIElement e) => ((Button)e).label.tint = Color.white;
-	void OnPressed(UIElement e) => e.uv = texture.GetUVRegion(new RectInt(16, 32, 16, 16));
-	void OnReleased(UIElement e) => e.uv = texture.GetUVRegion(new RectInt(0, 32, 16, 16));
+	void OnPressed(UIElement e)
+	{
+		if (e is Button b)
+		{
+			b.label.position = new Vector2(0, 1);
+			b.uv = texture.GetUVRegion(new RectInt(16, 32, 16, 16));
+		}
+	}
+	void OnReleased(UIElement e)
+	{
+		if (e is Button b)
+		{
+			b.label.position = new Vector2(0, 2);
+			e.uv = texture.GetUVRegion(new RectInt(0, 32, 16, 16));
+		}
+	}
 }
 
 void PanelPrefab(Panel e)
