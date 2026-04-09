@@ -26,6 +26,7 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	private bool finished;
 	private int bombFlagged;
 	private int tileOpenLeft;
+	private bool firstClick = true;
 	
 	public override void Init()
 	{
@@ -51,19 +52,6 @@ public class Game(Vector2Int size, int nBomb) : Scene
 		canvas.root.AddChild(ui = new GameUI());
 		bombsLeft = nBomb;
 		tileOpenLeft = size.x * size.y - nBomb;
-		for (var i = 0; i < nBomb; i++)
-		{
-			Vector2Int position;
-			do
-			{
-				position = new Vector2Int(Random.Shared.Next(size.x), Random.Shared.Next(size.y));
-			} while (bombs.Contains(position));
-			bombs[i] = position;
-		}
-		
-		for (var x = 0; x < size.x; x++)
-		for (var y = 0; y < size.y; y++)
-			tiles[x, y] = (TileType.Closed, bombs.Contains(new Vector2Int(x, y)));
 		
 		world.camera.position = size * TILE_SIZE * 0.5F;
 		world.AddObject(map = new Map(size));
@@ -115,7 +103,15 @@ public class Game(Vector2Int size, int nBomb) : Scene
 				return;
 			
 			if (button == MouseButton.Left)
+			{
+				if (firstClick)
+				{
+					CreateBombs(position);
+					firstClick = false;
+				}
+				
 				OnTile(position);
+			}
 			else if (button == MouseButton.Right)
 			{
 				ref var tile = ref tiles[position.x, position.y];
@@ -240,6 +236,26 @@ public class Game(Vector2Int size, int nBomb) : Scene
 		}
 		
 		map.ApplyUpdate();
+	}
+	
+	private void CreateBombs(Vector2Int position)
+	{
+		for (var i = 0; i < bombs.Length; i++)
+		{
+			Vector2Int bombPos;
+			do
+			{
+				bombPos = new Vector2Int(Random.Shared.Next(size.x), Random.Shared.Next(size.y));
+			} while (bombs.Contains(bombPos) || bombPos.IsInsideBounds(
+						 position - Vector2Int.one,
+						 position + Vector2Int.one
+					 ));
+			bombs[i] = bombPos;
+		}
+		
+		for (var x = 0; x < size.x; x++)
+		for (var y = 0; y < size.y; y++)
+			tiles[x, y] = (TileType.Closed, bombs.Contains(new Vector2Int(x, y)));
 	}
 	
 	private bool IsValidPosition(Vector2Int position)
