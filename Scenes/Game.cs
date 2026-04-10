@@ -120,7 +120,7 @@ public class Game(Vector2Int size, int nBomb) : Scene
 				
 				OnTile(position);
 			}
-			else if (button == MouseButton.Right)
+			else if (button == MouseButton.Right && !finished)
 			{
 				ref var tile = ref tiles[position.x, position.y];
 				switch (tile.type)
