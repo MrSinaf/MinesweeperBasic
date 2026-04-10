@@ -1,5 +1,6 @@
 ﻿using Ratelite;
 using Ratelite.Resources;
+using Ratelite.Sounds;
 using Ratelite.UI;
 using Ratelite.UI.Widgets;
 
@@ -13,6 +14,7 @@ public class Splash : Scene
 	
 	public override void Init()
 	{
+		Audio.volume = 0.15F;
 		canvas = AddPlugin<Canvas>();
 	}
 	public override void Start()

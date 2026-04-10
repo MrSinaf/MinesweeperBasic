@@ -1,6 +1,7 @@
 ﻿using MinesweeperBasic.UI;
 using Ratelite;
 using Ratelite.GO;
+using Ratelite.Sounds;
 using Ratelite.UI;
 
 namespace MinesweeperBasic.Scenes;
@@ -28,10 +29,13 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	private int tileOpenLeft;
 	private bool firstClick = true;
 	
+	private AudioSource audioSource = null!;
+	
 	public override void Init()
 	{
 		world = AddPlugin<World>();
 		canvas = AddPlugin<Canvas>();
+		audioSource = new AudioSource();
 		
 		R.game.window.mouseButtonPressed += OnMouseButtonPressed;
 		R.game.window.mouseButtonReleased += OnMouseButtonReleased;
@@ -45,10 +49,12 @@ public class Game(Vector2Int size, int nBomb) : Scene
 		R.game.window.mouseButtonReleased -= OnMouseButtonReleased;
 		R.game.window.cursorMoved -= OnCursorMoved;
 		R.game.window.keyPressed -= OnKeyPressed;
+		audioSource.Dispose();
 	}
 	
 	public override void Start()
 	{
+		audioSource.audio = Vault.GetAsset<AudioClip>("click");
 		canvas.root.AddChild(ui = new GameUI());
 		bombsLeft = nBomb;
 		tileOpenLeft = size.x * size.y - nBomb;
@@ -65,6 +71,8 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	
 	private void Loose()
 	{
+		audioSource.audio = Vault.GetAsset<AudioClip>("boom");
+		audioSource.Play();
 		foreach (var bomb in bombs)
 			map.UpdateTileUVAsBomb(bomb);
 		
@@ -123,12 +131,14 @@ public class Game(Vector2Int size, int nBomb) : Scene
 						map.UpdateTileUV(position, tile.type = TileType.Flagged);
 						bombsLeft--;
 						
+						audioSource.Play();
 						if (tile.isBomb)
 							bombFlagged++;
 						break;
 					case TileType.Flagged:
 						map.UpdateTileUV(position, tile.type = TileType.Questionned);
 						bombsLeft++;
+						audioSource.Play();
 						
 						if (tile.isBomb)
 							bombFlagged--;

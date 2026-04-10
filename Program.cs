@@ -2,31 +2,40 @@
 using Ratelite;
 using Ratelite.GO;
 using Ratelite.Resources;
+using Ratelite.Sounds;
 using Ratelite.UI;
 using Ratelite.UI.Widgets;
 
 R.CreateGame()
-  .SetIcon("assets/icon.png")
-  .AddModule<GOModule>()
-  .AddModule<UIModule>()
-  .SetStartingScene<Splash>()
-  .SetWindowOptions(new WindowOptions("Minesweeper BASIC", 960, 550)
-  {
-	  resizable = false
-  })
-  .LoadingAssets(async progress =>
-  {
-	  UIPrefab.Add<Button>(string.Empty, ButtonPrefab);
-	  UIPrefab.Add<Panel>(string.Empty, PanelPrefab);
-	  
-	  await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
-	  progress.Report(0.25F);
-	  await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
-	  progress.Report(0.5F);
-	  await Vault.LoadResource<Texture2D>("textures/ui.png", "ui");
-	  progress.Report(1);
-  })
-  .Run();
+ .SetIcon("assets/icon.png")
+ .AddModule<GOModule>()
+ .AddModule<UIModule>()
+ .AddModule<SoundModule>()
+ .SetStartingScene<Splash>()
+ .SetWindowOptions(
+	 new WindowOptions("Minesweeper BASIC", 960, 550)
+	 {
+		 resizable = false
+	 }
+ )
+ .LoadingAssets(async progress =>
+	 {
+		 UIPrefab.Add<Button>(string.Empty, ButtonPrefab);
+		 UIPrefab.Add<Panel>(string.Empty, PanelPrefab);
+		 
+		 progress.Report(0.1F);
+		 await Vault.LoadResource<AudioClip>("sounds/boom.wav", "boom");
+		 await Vault.LoadResource<AudioClip>("sounds/click.wav", "click");
+		 progress.Report(0.25F);
+		 await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
+		 progress.Report(0.35F);
+		 await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
+		 progress.Report(0.5F);
+		 await Vault.LoadResource<Texture2D>("textures/ui.png", "ui");
+		 progress.Report(1);
+	 }
+ )
+ .Run();
 
 
 void ButtonPrefab(Button e)

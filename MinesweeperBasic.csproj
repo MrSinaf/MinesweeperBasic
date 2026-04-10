@@ -23,6 +23,7 @@
       <ProjectReference Include="..\Ratelite\Ratelite.Core\Ratelite.Core.csproj" />
       <ProjectReference Include="..\Ratelite\Ratelite.GO\Ratelite.GO.csproj" />
       <ProjectReference Include="..\Ratelite\Ratelite.Native\Ratelite.Native.csproj" />
+      <ProjectReference Include="..\Ratelite\Ratelite.Sounds\Ratelite.Sounds.csproj" />
       <ProjectReference Include="..\Ratelite\Ratelite.UI\Ratelite.UI.csproj" />
     </ItemGroup>
     <!-- Ratelite end integration   -->
