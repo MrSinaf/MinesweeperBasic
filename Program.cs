@@ -35,7 +35,7 @@ void ButtonPrefab(Button e)
 	var texture = Vault.GetAsset<Texture2D>("ui")!;
 	e.material = new MaterialUI().SetTexture(texture)
 								 .SetNinePatch(new Region(new Vector2(3, 2), new Vector2(3, 4)), 3);
-	e.uv =  texture.GetUVRegion(new RectInt(0, 32, 16, 16));
+	e.uv = texture.GetUVRegion(new RectInt(0, 32, 16, 16));
 	e.size = new Vector2(200, 35);
 	
 	e.label.pivot = e.label.anchors = new Vector2(0.5F);

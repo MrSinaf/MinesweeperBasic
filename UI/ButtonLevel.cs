@@ -73,7 +73,8 @@ public sealed class ButtonLevel : Button
 				size = new Vector2(8, 10),
 				scale = new Vector2(2),
 				pivot = new Vector2(1, 0),
-				anchors = new Vector2(1, 0)
+				anchors = new Vector2(1, 0),
+				isInteractif = false
 			}
 		);
 		

@@ -19,7 +19,7 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	private GameUI ui = null!;
 	private Map map = null!;
 	private bool moveCamera;
-	private int bombsLeft { get => field; set => ui.UpdateBombs(field = value); }
+	private int bombsLeft { get; set => ui.UpdateBombs(field = value); }
 	private readonly Vector2Int[] bombs = new Vector2Int[nBomb];
 	
 	private float timer;
