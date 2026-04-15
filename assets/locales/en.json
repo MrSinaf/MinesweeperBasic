@@ -1,0 +1,27 @@
+{
+  "button": {
+    "play": "Play",
+    "learn": "Learn",
+    "exit": "Exit",
+    "back": "Back"
+  },
+
+  "slider": {
+    "volume": {
+      "music": "Music",
+      "effects": "Effects"
+    }
+  },
+
+  "dialog": {
+    "win": {
+      "title": "You won!",
+      "timer": "Time elapsed: {0}"
+    },
+    "lose": {
+      "title": "You lost!",
+      "timer": "Time elapsed: {0}",
+      "mine": "Remaining mines: {0}"
+    }
+  }
+}

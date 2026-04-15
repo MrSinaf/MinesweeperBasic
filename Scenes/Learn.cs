@@ -20,7 +20,7 @@ public class Learn : Scene
 			margin = new Region(10, 60, 10, 10),
 		};
 		canvas.root.AddChild(
-			new Button("Retour", () => Stage.Load(new Menu()).Wait())
+			new Button(Local.Get("button.back"), () => Stage.Load(new Menu()).Wait())
 			{
 				pivot = new Vector2(0.5F, 0),
 				anchors = new Vector2(0.5F, 0),

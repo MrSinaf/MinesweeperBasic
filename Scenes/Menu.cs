@@ -14,7 +14,6 @@ public class Menu : Scene
 	
 	private Canvas canvas = null!;
 	private Panel levels = null!;
-	private Panel settings = null!;
 	
 	public override void Init()
 	{
@@ -55,7 +54,7 @@ public class Menu : Scene
 		};
 		layout.AddChild(
 			new Button(
-				"Jouer",
+				Local.Get("button.play"),
 				() =>
 				{
 					levels.active = !levels.active;
@@ -64,9 +63,9 @@ public class Menu : Scene
 			)
 		);
 		layout.AddChild(
-			new Button("Apprendre", () => Stage.Load(new Learn()).Wait())
+			new Button(Local.Get("button.learn"), () => Stage.Load(new Learn()).Wait())
 		);
-		layout.AddChild(new Button("Quitter", () => Window.current.Close()));
+		layout.AddChild(new Button(Local.Get("button.exit"), () => Window.current.Close()));
 		canvas.root.AddChild(layout);
 		
 		// Liste des niveaux:
@@ -95,28 +94,59 @@ public class Menu : Scene
 		// Paramètres:
 		var mainLayout = new Layout
 		{
-			pivot = new Vector2(1, 0), 
+			pivot = new Vector2(1, 0),
 			anchors = new Vector2(1, 0),
-			orientation = Orientation.Vertical, 
+			orientation = Orientation.Vertical,
 			spacing = 10,
+			alignment = 1
 		};
 		
 		var musicLayout = new Layout { orientation = Orientation.Vertical, alignment = 1 };
-		musicLayout.AddChild(new Label("Musique"));
-		musicLayout.AddChild(new Slider(x => music.volume = x, Orientation.Horizontal)
-		{
-			value = music.volume
-		});
+		musicLayout.AddChild(new Label(Local.Get("slider.volume.music")));
+		musicLayout.AddChild(
+			new Slider(x => music.volume = x, Orientation.Horizontal)
+			{
+				value = music.volume
+			}
+		);
 		mainLayout.AddChild(musicLayout);
 		
 		
 		var effectLayout = new Layout { orientation = Orientation.Vertical, alignment = 1 };
-		effectLayout.AddChild(new Label("Effets"));
-		effectLayout.AddChild(new Slider(x => effectVolume = x, Orientation.Horizontal)
-		{
-			value = effectVolume
-		});
+		effectLayout.AddChild(new Label(Local.Get("slider.volume.effects")));
+		effectLayout.AddChild(
+			new Slider(x => effectVolume = x, Orientation.Horizontal)
+			{
+				value = effectVolume
+			}
+		);
 		mainLayout.AddChild(effectLayout);
+		
+		var langLayout = new Layout
+		{
+			orientation = Orientation.Horizontal, spacing = 5
+		};
+		langLayout.AddChild(
+			new ButtonFlag(
+				0,
+				() =>
+				{
+					Local.Load("fr");
+					Stage.Load(new Menu()).Wait();
+				}
+			)
+		);
+		langLayout.AddChild(
+			new ButtonFlag(
+				1,
+				() =>
+				{
+					Local.Load("en");
+					Stage.Load(new Menu()).Wait();
+				}
+			)
+		);
+		mainLayout.AddChild(langLayout);
 		
 		canvas.root.AddChild(mainLayout);
 	}

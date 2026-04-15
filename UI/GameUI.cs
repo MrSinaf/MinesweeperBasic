@@ -72,7 +72,7 @@ public sealed class GameUI : UIElement
 			size = new Vector2(250, 150)
 		};
 		panel.AddChild(
-			new Label("Vous avez gagnez !")
+			new Label(Local.Get("dialog.win.title"))
 			{
 				pivot = new Vector2(0.5F, 1),
 				anchors = new Vector2(0.5F, 1),
@@ -80,13 +80,13 @@ public sealed class GameUI : UIElement
 			}
 		);
 		panel.AddChild(
-			new Label($"Temps écoulé : {timer.text}")
+			new Label(Local.Get("dialog.win.timer", timer.text))
 			{
 				pivot = new Vector2(0.5F),
 				anchors = new Vector2(0.5F),
 			}
 		);
-		panel.AddChild(new Button("Quitter", () => Stage.Load(new Menu()).Wait())
+		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()).Wait())
 		{
 			mesh = null,
 			size = new Vector2(100, 35),
@@ -107,7 +107,7 @@ public sealed class GameUI : UIElement
 			size = new Vector2(250, 150)
 		};
 		panel.AddChild(
-			new Label("Vous avez perdu !")
+			new Label(Local.Get("dialog.lose.title"))
 			{
 				pivot = new Vector2(0.5F, 1),
 				anchors = new Vector2(0.5F, 1),
@@ -115,13 +115,16 @@ public sealed class GameUI : UIElement
 			}
 		);
 		panel.AddChild(
-			new Label($"Temps écoulé : {timer.text}\nBombes restantes : {bombsLeft}")
+			new Label(
+				Local.Get("dialog.lose.timer", timer.text) + "\n" +
+				Local.Get("dialog.lose.mine", bombsLeft)
+			)
 			{
 				pivot = new Vector2(0.5F),
 				anchors = new Vector2(0.5F),
 			}
 		);
-		panel.AddChild(new Button("Quitter", () => Stage.Load(new Menu()).Wait())
+		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()).Wait())
 		{
 			mesh = null,
 			size = new Vector2(100, 35),

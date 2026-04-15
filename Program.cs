@@ -1,4 +1,6 @@
-﻿using MinesweeperBasic.Scenes;
+﻿using System.Globalization;
+using MinesweeperBasic;
+using MinesweeperBasic.Scenes;
 using Ratelite;
 using Ratelite.GO;
 using Ratelite.Resources;
@@ -36,7 +38,10 @@ R.CreateGame()
 		 await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
 		 progress.Report(0.9F);
 		 await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
-		 progress.Report(1);
+		 progress.Report(0.95F);
+		 var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+		 Local.Load(lang == "fr" ? "fr" : "en");
+		 progress.Report(1F);
 	 }
  )
  .Run();
