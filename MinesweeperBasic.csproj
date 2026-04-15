@@ -9,6 +9,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Exe</OutputType>
         <Nullable>enable</Nullable>
+        <ApplicationIcon>assets\icon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <!-- Ratelite start integration -->

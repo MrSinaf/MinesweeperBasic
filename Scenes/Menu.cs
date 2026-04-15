@@ -101,9 +101,9 @@ public class Menu : Scene
 		var musicLayout = new Layout { orientation = Orientation.Vertical, alignment = 1 };
 		musicLayout.AddChild(new Label(Local.Get("slider.volume.music")));
 		musicLayout.AddChild(
-			new Slider(x => music.volume = x, Orientation.Horizontal)
+			new Slider(x => music!.volume = x, Orientation.Horizontal)
 			{
-				value = music.volume
+				value = music!.volume
 			}
 		);
 		mainLayout.AddChild(musicLayout);
