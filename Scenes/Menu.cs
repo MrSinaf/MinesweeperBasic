@@ -62,9 +62,6 @@ public class Menu : Scene
 				}
 			)
 		);
-		layout.AddChild(
-			new Button(Local.Get("button.learn"), () => Stage.Load(new Learn()).Wait())
-		);
 		layout.AddChild(new Button(Local.Get("button.exit"), () => Window.current.Close()));
 		canvas.root.AddChild(layout);
 		
