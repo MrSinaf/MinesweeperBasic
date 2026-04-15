@@ -22,16 +22,20 @@ R.CreateGame()
 	 {
 		 UIPrefab.Add<Button>(string.Empty, ButtonPrefab);
 		 UIPrefab.Add<Panel>(string.Empty, PanelPrefab);
+		 UIPrefab.Add<Slider>(string.Empty, SliderPrefab);
 		 
 		 progress.Report(0.1F);
 		 await Vault.LoadResource<AudioClip>("sounds/boom.wav", "boom");
+		 progress.Report(0.15F);
 		 await Vault.LoadResource<AudioClip>("sounds/click.wav", "click");
-		 progress.Report(0.25F);
-		 await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
-		 progress.Report(0.35F);
-		 await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
-		 progress.Report(0.5F);
+		 progress.Report(0.2F);
+		 await Vault.LoadResource<AudioClip>("sounds/music.ogg", "music");
+		 progress.Report(0.8F);
 		 await Vault.LoadResource<Texture2D>("textures/ui.png", "ui");
+		 progress.Report(0.85F);
+		 await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
+		 progress.Report(0.9F);
+		 await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
 		 progress.Report(1);
 	 }
  )
@@ -87,4 +91,17 @@ void PanelPrefab(Panel e)
 								 .SetNinePatch(new Region(6), 3);
 	e.cornerRadius = Region.zero;
 	e.uv = texture.GetUVRegion(new RectInt(64, 32, 16, 16));
+}
+
+void SliderPrefab(Slider e)
+{
+	Slider.DefaultPrefab(e);
+	e.tint = new Color(0x272A35);
+	e.cursor.tint = Color.white;
+	
+	e.cursorEnter += CursorEnter;
+	e.cursorExit += CursorExit;
+	
+	void CursorEnter(UIElement e) => ((Slider)e).cursor.tint = Color.green;
+	void CursorExit(UIElement e) => ((Slider)e).cursor.tint = Color.white;
 }

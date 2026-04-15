@@ -7,12 +7,10 @@ using Ratelite.Utils;
 
 namespace MinesweeperBasic.UI;
 
-public sealed class ButtonLevel : Button
+public sealed class ButtonLevel : ElementButton
 {
-	private UIElement container;
-	
 	public ButtonLevel(Vector2Int tiles, int bomb) : base(
-		$"{tiles.x}x{tiles.y}",
+		new UIElement(),
 		delegate { },
 		null
 	)
@@ -26,16 +24,16 @@ public sealed class ButtonLevel : Button
 		padding = new Region(12);
 		size = new Vector2(150, 150);
 		
-		label.pivot = label.anchors = new Vector2(0.5F, 1);
-		label.tint = Color.white;
+		element.anchorMin = Vector2.zero; 
+		element.anchorMax = Vector2.one;
+		element.isInteractif = false;
 		
-		container = new UIElement
+		element.AddChild(new Label
 		{
-			anchorMin = Vector2.zero, 
-			anchorMax = Vector2.one,
-			isInteractif = false
-		};
-		AddChild(container);
+			pivot = new Vector2(0.5F, 1),
+			anchors = new Vector2(0.5F, 1),
+			text = $"{tiles.x}x{tiles.y}"
+		});
 		
 		// Création des tiles:
 		var meshes = new (Rect vertices, Region uvs)[tiles.x * tiles.y];
@@ -43,7 +41,7 @@ public sealed class ButtonLevel : Button
 		for (var x = 0; x < tiles.x; x++)
 		for (var y = 0; y < tiles.y; y++)
 			meshes[x + y * tiles.x] = (new Rect(new Vector2(x, y) * 4, new Vector2(4)), tile);
-		container.AddChild(
+		element.AddChild(
 			new UIElement
 			{
 				mesh = MeshFactory.CreateQuads(meshes),
@@ -57,7 +55,7 @@ public sealed class ButtonLevel : Button
 			}
 		);
 		// Affichage du nombre de bombs:
-		container.AddChild(
+		element.AddChild(
 			new Label(bomb.ToString())
 			{
 				position = new Vector2(-22, 0),
@@ -65,7 +63,7 @@ public sealed class ButtonLevel : Button
 				anchors = new Vector2(1, 0)
 			}
 		);
-		container.AddChild(
+		element.AddChild(
 			new Image(texture)
 			{
 				uv = texture.GetUVRegion(new RectInt(212, 35, 8, 10)),
@@ -86,8 +84,7 @@ public sealed class ButtonLevel : Button
 		{
 			if (e is ButtonLevel b)
 			{
-				b.container.position = new Vector2(0, -2);
-				b.label.position = new Vector2(0, -2);
+				b.element.position = new Vector2(0, -2);
 				b.uv = texture.GetUVRegion(new RectInt(48, 32, 16, 16));
 			}
 		}
@@ -96,8 +93,7 @@ public sealed class ButtonLevel : Button
 		{
 			if (e is ButtonLevel b)
 			{
-				b.container.position = Vector2.zero;
-				b.label.position = Vector2.zero;
+				b.element.position = Vector2.zero;
 				b.uv = texture.GetUVRegion(new RectInt(32, 32, 16, 16));
 			}
 		}

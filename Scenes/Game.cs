@@ -35,7 +35,10 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	{
 		world = AddPlugin<World>();
 		canvas = AddPlugin<Canvas>();
-		audioSource = new AudioSource();
+		audioSource = new AudioSource
+		{
+			volume = Menu.effectVolume
+		};
 		
 		R.game.window.mouseButtonPressed += OnMouseButtonPressed;
 		R.game.window.mouseButtonReleased += OnMouseButtonReleased;

@@ -1,6 +1,7 @@
 ﻿using MinesweeperBasic.UI;
 using Ratelite;
 using Ratelite.Resources;
+using Ratelite.Sounds;
 using Ratelite.UI;
 using Ratelite.UI.Widgets;
 
@@ -8,11 +9,27 @@ namespace MinesweeperBasic.Scenes;
 
 public class Menu : Scene
 {
+	private static AudioSource? music;
+	public static float effectVolume { get; private set; } = 1;
+	
 	private Canvas canvas = null!;
 	private Panel levels = null!;
+	private Panel settings = null!;
 	
 	public override void Init()
-		=> canvas = AddPlugin<Canvas>();
+	{
+		canvas = AddPlugin<Canvas>();
+		
+		if (music == null)
+		{
+			music = new AudioSource
+			{
+				looping = true,
+				audio = Vault.GetAsset<AudioClip>("music")
+			};
+			music.Play();
+		}
+	}
 	
 	public override void Start()
 	{
@@ -37,7 +54,14 @@ public class Menu : Scene
 			anchors = new Vector2(0.5F, 0),
 		};
 		layout.AddChild(
-			new Button("Jouer", () => levels.active = !levels.active)
+			new Button(
+				"Jouer",
+				() =>
+				{
+					levels.active = !levels.active;
+					levels.MoveOnTop();
+				}
+			)
 		);
 		layout.AddChild(
 			new Button("Apprendre", () => Stage.Load(new Learn()).Wait())
@@ -67,6 +91,34 @@ public class Menu : Scene
 		levelButtons.AddChild(new ButtonLevel(new Vector2Int(16, 16), 40));
 		levelButtons.AddChild(new ButtonLevel(new Vector2Int(30, 16), 99));
 		levels.AddChild(levelButtons);
+		
+		// Paramètres:
+		var mainLayout = new Layout
+		{
+			pivot = new Vector2(1, 0), 
+			anchors = new Vector2(1, 0),
+			orientation = Orientation.Vertical, 
+			spacing = 10,
+		};
+		
+		var musicLayout = new Layout { orientation = Orientation.Vertical, alignment = 1 };
+		musicLayout.AddChild(new Label("Musique"));
+		musicLayout.AddChild(new Slider(x => music.volume = x, Orientation.Horizontal)
+		{
+			value = music.volume
+		});
+		mainLayout.AddChild(musicLayout);
+		
+		
+		var effectLayout = new Layout { orientation = Orientation.Vertical, alignment = 1 };
+		effectLayout.AddChild(new Label("Effets"));
+		effectLayout.AddChild(new Slider(x => effectVolume = x, Orientation.Horizontal)
+		{
+			value = effectVolume
+		});
+		mainLayout.AddChild(effectLayout);
+		
+		canvas.root.AddChild(mainLayout);
 	}
 	
 	public override void Update() { }
