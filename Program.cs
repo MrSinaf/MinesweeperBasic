@@ -27,17 +27,17 @@ R.CreateGame()
 		 UIPrefab.Add<Slider>(string.Empty, SliderPrefab);
 		 
 		 progress.Report(0.1F);
-		 await Vault.LoadResource<AudioClip>("sounds/boom.wav", "boom");
+		 await Vault.LoadAsyncResource<AudioClip>("sounds/boom.wav", "boom");
 		 progress.Report(0.15F);
-		 await Vault.LoadResource<AudioClip>("sounds/click.wav", "click");
+		 await Vault.LoadAsyncResource<AudioClip>("sounds/click.wav", "click");
 		 progress.Report(0.2F);
-		 await Vault.LoadResource<AudioClip>("sounds/music.ogg", "music");
+		 await Vault.LoadAsyncResource<AudioClip>("sounds/music.ogg", "music");
 		 progress.Report(0.8F);
-		 await Vault.LoadResource<Texture2D>("textures/ui.png", "ui");
+		 await Vault.LoadAsyncResource<Texture2D>("textures/ui.png", "ui");
 		 progress.Report(0.85F);
-		 await Vault.LoadResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
+		 await Vault.LoadAsyncResource<Texture2D>("textures/purrvert.png", "purrvert-icon");
 		 progress.Report(0.9F);
-		 await Vault.LoadResource<Texture2D>("textures/tiles.png", "tiles");
+		 await Vault.LoadAsyncResource<Texture2D>("textures/tiles.png", "tiles");
 		 progress.Report(0.95F);
 		 var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 		 Local.Load(lang == "fr" ? "fr" : "en");

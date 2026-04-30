@@ -76,7 +76,7 @@ public sealed class ButtonLevel : ElementButton
 			}
 		);
 		
-		onClick += () => Stage.Load(new Game(tiles, bomb)).Wait();
+		onClick += () => Stage.Load(new Game(tiles, bomb));
 		onPressed += OnPressed;
 		onReleased += OnReleased;
 		

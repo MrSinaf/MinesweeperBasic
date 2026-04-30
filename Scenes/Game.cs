@@ -182,10 +182,10 @@ public class Game(Vector2Int size, int nBomb) : Scene
 				world.camera.position = size * TILE_SIZE * 0.5F;
 				break;
 			case Key.Escape:
-				Stage.Load(new Menu()).Wait();
+				Stage.Load(new Menu());
 				break;
 			case Key.R:
-				Stage.Load(new Game(size, nBomb)).Wait();
+				Stage.Load(new Game(size, nBomb));
 				break;
 		}
 	}

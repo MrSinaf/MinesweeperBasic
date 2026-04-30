@@ -129,7 +129,7 @@ public class Menu : Scene
 				() =>
 				{
 					Local.Load("fr");
-					Stage.Load(new Menu()).Wait();
+					Stage.Load(new Menu());
 				}
 			)
 		);
@@ -139,7 +139,7 @@ public class Menu : Scene
 				() =>
 				{
 					Local.Load("en");
-					Stage.Load(new Menu()).Wait();
+					Stage.Load(new Menu());
 				}
 			)
 		);

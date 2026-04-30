@@ -86,7 +86,7 @@ public sealed class GameUI : UIElement
 				anchors = new Vector2(0.5F),
 			}
 		);
-		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()).Wait())
+		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()))
 		{
 			mesh = null,
 			size = new Vector2(100, 35),
@@ -124,7 +124,7 @@ public sealed class GameUI : UIElement
 				anchors = new Vector2(0.5F),
 			}
 		);
-		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()).Wait())
+		panel.AddChild(new Button(Local.Get("button.exit"), () => Stage.Load(new Menu()))
 		{
 			mesh = null,
 			size = new Vector2(100, 35),

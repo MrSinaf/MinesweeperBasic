@@ -42,6 +42,6 @@ public class Splash : Scene
 		}
 		
 		if (time > 2)
-			_ = Stage.Load(new Menu());
+			Stage.Load(new Menu());
 	}
 }
