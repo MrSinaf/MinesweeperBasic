@@ -29,6 +29,10 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	private int tileOpenLeft;
 	private bool firstClick = true;
 	
+#if DEBUG
+	private bool showDebug = true;
+#endif
+	
 	private AudioSource audioSource = null!;
 	
 	public override void Init()
@@ -102,6 +106,11 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	{
 		if (canvas.hasElementHovered)
 			return;
+		
+#if DEBUG
+		if (ImGui.GetIO().WantCaptureMouse)
+			return;
+#endif
 		
 		if (button == MouseButton.Middle)
 			moveCamera = true;
@@ -187,6 +196,11 @@ public class Game(Vector2Int size, int nBomb) : Scene
 			case Key.R:
 				Stage.Load(new Game(size, nBomb));
 				break;
+#if DEBUG
+			case Key.F1:
+				showDebug = !showDebug;
+				break;
+#endif
 		}
 	}
 	
@@ -273,4 +287,40 @@ public class Game(Vector2Int size, int nBomb) : Scene
 	
 	private bool IsValidPosition(Vector2Int position)
 		=> position.x >= 0 && position.y >= 0 && position.x < size.x && position.y < size.y;
+	
+#if DEBUG
+	public override void Render()
+	{
+		if (!showDebug)
+			return;
+		
+		var viewport = ImGui.GetMainViewport();
+		ImGui.SetNextWindowPos(new Vector2(0, viewport.Size.y - 64));
+		ImGui.SetNextWindowSize(new Vector2(225, 64));
+		ImGui.SetNextWindowBgAlpha(0.5F);
+		ImGui.PushStyleVar(ImGuiStyleVar.WindowBorderSize, 0f);
+		ImGui.Begin("Tiles", ImGuiWindowFlags.NoDecoration);
+		{
+			var position = (world.camera.ScreenToWorldPosition(R.game.window.cursorPosition)
+							/ TILE_SIZE).ToVector2Int(RoundingMode.Floor);
+			
+			if (bombs.Contains(position))
+			{
+				ImGui.PushStyleColor(ImGuiCol.Text, Color.red);
+				ImGui.Text("Cursor is over a bomb (。_。)");
+			}
+			else
+			{
+				ImGui.PushStyleColor(ImGuiCol.Text, Color.green);
+				ImGui.Text("Cursor is not over a bomb (*￣3￣)╭");
+			}
+			ImGui.PopStyleColor();
+			
+			ImGui.Text($"Bombs  : {bombsLeft}");
+			ImGui.Text($"Opened : {tileOpenLeft}");
+		}
+		ImGui.End();
+		ImGui.PopStyleVar();
+	}
+#endif
 }

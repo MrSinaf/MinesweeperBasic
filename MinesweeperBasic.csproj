@@ -16,16 +16,20 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <OutputType>WinExe</OutputType>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <None Update="assets\**\*" CopyToOutputDirectory="Always"/>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Ratelite\Ratelite.Core\Ratelite.Core.csproj" />
-      <ProjectReference Include="..\Ratelite\Ratelite.GO\Ratelite.GO.csproj" />
-      <ProjectReference Include="..\Ratelite\Ratelite.Native\Ratelite.Native.csproj" />
-      <ProjectReference Include="..\Ratelite\Ratelite.Sounds\Ratelite.Sounds.csproj" />
-      <ProjectReference Include="..\Ratelite\Ratelite.UI\Ratelite.UI.csproj" />
+        <ProjectReference Include="..\Ratelite\Ratelite.Core\Ratelite.Core.csproj"/>
+        <ProjectReference Include="..\Ratelite\Ratelite.GO\Ratelite.GO.csproj"/>
+        <ProjectReference Include="..\Ratelite\Ratelite.Native\Ratelite.Native.csproj"/>
+        <ProjectReference Include="..\Ratelite\Ratelite.Sounds\Ratelite.Sounds.csproj"/>
+        <ProjectReference Include="..\Ratelite\Ratelite.UI\Ratelite.UI.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <ProjectReference Include="..\Ratelite\Ratelite.Debugs\Ratelite.Debugs.csproj"/>
     </ItemGroup>
     <!-- Ratelite end integration   -->
 

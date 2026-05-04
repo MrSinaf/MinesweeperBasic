@@ -147,6 +147,4 @@ public class Menu : Scene
 		
 		canvas.root.AddChild(mainLayout);
 	}
-	
-	public override void Update() { }
 }

@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿#if DEBUG
+global using Ratelite.Debugs;
+#endif
+
+using System.Globalization;
 using MinesweeperBasic;
 using MinesweeperBasic.Scenes;
 using Ratelite;
@@ -13,6 +17,10 @@ R.CreateGame()
  .AddModule<GOModule>()
  .AddModule<UIModule>()
  .AddModule<SoundModule>()
+#if DEBUG
+ .AddModule<DebugManager>()
+ .AddModule<DebugModule>()
+#endif
  .SetStartingScene<Splash>()
  .SetWindowOptions(
 	 new WindowOptions("Minesweeper BASIC", 960, 550)
@@ -67,6 +75,7 @@ void ButtonPrefab(Button e)
 	
 	void OnCursorEnter(UIElement e) => ((Button)e).label.tint = Color.green;
 	void OnCursorExit(UIElement e) => ((Button)e).label.tint = Color.white;
+	
 	void OnPressed(UIElement e)
 	{
 		if (e is Button b)
@@ -75,6 +84,7 @@ void ButtonPrefab(Button e)
 			b.uv = texture.GetUVRegion(new RectInt(16, 32, 16, 16));
 		}
 	}
+	
 	void OnReleased(UIElement e)
 	{
 		if (e is Button b)
