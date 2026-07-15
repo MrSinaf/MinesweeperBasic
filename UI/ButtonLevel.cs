@@ -26,7 +26,7 @@ public sealed class ButtonLevel : ElementButton
 		
 		element.anchorMin = Vector2.zero; 
 		element.anchorMax = Vector2.one;
-		element.isInteractif = false;
+		element.isInteractive = false;
 		
 		element.AddChild(new Label
 		{
@@ -51,7 +51,7 @@ public sealed class ButtonLevel : ElementButton
 				overflowHidden = false,
 				pivot = new Vector2(0.5F),
 				anchors = new Vector2(0.5F),
-				isInteractif = false
+				isInteractive = false
 			}
 		);
 		// Affichage du nombre de bombs:
@@ -72,7 +72,7 @@ public sealed class ButtonLevel : ElementButton
 				scale = new Vector2(2),
 				pivot = new Vector2(1, 0),
 				anchors = new Vector2(1, 0),
-				isInteractif = false
+				isInteractive = false
 			}
 		);
 		

@@ -77,11 +77,14 @@ public class Map : RObject
 	
 	private void UpdateTileUV(Vector2Int position, RectInt rect)
 	{
-		var uv = texture.GetUVRegion(rect);
-		var i = (position.x + position.y * size.x) * 4;
-		mesh!.vertices[i].uv = uv.position00;
-		mesh!.vertices[i + 1].uv = new Vector2(uv.position11.x, uv.position00.y);
-		mesh!.vertices[i + 2].uv = uv.position11;
-		mesh!.vertices[i + 3].uv = new Vector2(uv.position00.x, uv.position11.y);
+		if (mesh is Mesh<VertexPositionUV> m)
+		{
+			var uv = texture.GetUVRegion(rect);
+			var i = (position.x + position.y * size.x) * 4;
+			m.vertices[i].uv = uv.position00;
+			m.vertices[i + 1].uv = new Vector2(uv.position11.x, uv.position00.y);
+			m.vertices[i + 2].uv = uv.position11;
+			m.vertices[i + 3].uv = new Vector2(uv.position00.x, uv.position11.y);
+		}
 	}
 }
