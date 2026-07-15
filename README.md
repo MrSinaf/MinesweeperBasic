@@ -3,13 +3,14 @@
 </div>
 
 > [!note]
-> Les projets **BASIC** sont de simples petits jeux (✿◠‿◠), développés pour tester les *limites* du moteur
-> [Ratelite](https://github.com/MrSinaf/Ratelite).
+> **BASIC** projects are simple little games (✿◠‿◠), created to test the *limits* of the
+> [Ratelite](https://github.com/MrSinaf/Ratelite) engine.
 >
-> Ils servent à explorer les fonctionnalités du moteur, à vérifier ce qui fonctionne et à identifier
-> les bugs ou les améliorations possibles. Ces projets (surtout pendant le développement (。_。)), 
-> utilisent une version **local et/ou non-stable** du moteur.\
-> Oui... On le pénétre sans protection OwO...
+> They are used to explore the engine's features, verify what works, and identify
+> bugs or potential improvements. These projects (especially during development (。_。)),
+> use a **local and/or unstable** version of the engine.
+> 
+> Yeah... We penetrate him without protection OwO...
 
 <div align="right">
     <img src="assets/textures/purrvert.png"/>
